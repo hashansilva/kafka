@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 import java.util.stream.IntStream;
 
-public class ProducerWithCallbackDemo {
+public class ProducerWithKeys {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProducerWithCallbackDemo.class.getSimpleName());
+    private static final Logger logger = LoggerFactory.getLogger(ProducerWithKeys.class.getSimpleName());
 
     public static void main(String[] args) {
         logger.info("I'm Kafka Producer");
@@ -21,7 +21,7 @@ public class ProducerWithCallbackDemo {
         Properties properties = new Properties();
 
         // connect to localhost
-        properties.setProperty("bootstrap.servers", "ec2-3-95-222-127.compute-1.amazonaws.com:9092");
+        properties.setProperty("bootstrap.servers", "ec2-44-201-223-243.compute-1.amazonaws.com:9092");
         properties.setProperty("batch.size", "400");
 
         properties.setProperty("key.serializer", StringSerializer.class.getName());
@@ -29,12 +29,18 @@ public class ProducerWithCallbackDemo {
 
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
-        IntStream.range(0, 10).forEach(j -> {
-            IntStream.range(0, 30).<ProducerRecord<String, String>>mapToObj(i -> new ProducerRecord<>("demo_java_partition", "message_" + i)).forEach(producerRecord -> kafkaProducer.send(producerRecord, new Callback() {
+
+        IntStream.range(0, 30).forEach(i -> {
+            String topic = "demo_java";
+            String key = "id_" + i;
+            String value = "hello world " + i;
+            ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, key, value);
+            kafkaProducer.send(producerRecord, new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                     if (e == null) {
                         logger.info("Received new metadata \n" +
+                                "Key: " + key + "\n" +
                                 "Topic: " + recordMetadata.topic() + "\n" +
                                 "Partition: " + recordMetadata.partition() + "\n" +
                                 "Offset: " + recordMetadata.offset() + "\n" +
@@ -43,12 +49,7 @@ public class ProducerWithCallbackDemo {
                         logger.error("Error while producing", e);
                     }
                 }
-            }));
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            });
         });
 
         kafkaProducer.flush();
