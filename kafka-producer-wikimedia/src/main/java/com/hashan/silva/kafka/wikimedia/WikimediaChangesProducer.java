@@ -41,6 +41,11 @@ public class WikimediaChangesProducer {
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
+        //higher throughput properties
+        properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, Constants.LINGER_MS_CONFIG);
+        properties.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, Constants.BATCH_SIZE_CONFIG);
+        properties.setProperty(ProducerConfig.COMPRESSION_TYPE_CONFIG, Constants.COMPRESSION_TYPE_CONFIG);
+
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
         EventHandler eventHandler = new WikimediaChangeHandler(kafkaProducer, Constants.KAFKA_TOPIC);
@@ -50,7 +55,7 @@ public class WikimediaChangesProducer {
 
         eventSource.start();
 
-        TimeUnit.MINUTES.sleep(5);
+        TimeUnit.MINUTES.sleep(10);
 
     }
 }
