@@ -19,7 +19,6 @@ import com.hashan.silva.kafka.handler.WikimediaChangeHandler;
 import com.hashan.silva.kafka.util.Constants;
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.EventSource;
-import com.launchdarkly.eventsource.StreamException;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -51,7 +50,7 @@ public class WikimediaChangesProducer {
 
         eventSource.start();
 
-        TimeUnit.MINUTES.sleep(10);
+        TimeUnit.MINUTES.sleep(5);
 
     }
 }

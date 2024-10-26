@@ -16,7 +16,7 @@
 package com.hashan.silva.kafka.util;
 
 public class Constants {
-    public static final String BOOTSTRAP_SERVERS = "redpanda-0:9092";
+    public static final String BOOTSTRAP_SERVERS = "localhost:19092";
     public static final String KAFKA_TOPIC = "wikimedia.recentchange";
     public static final String WIKIMEDIA_URL = "https://stream.wikimedia.org/v2/stream/recentchange";
 }
