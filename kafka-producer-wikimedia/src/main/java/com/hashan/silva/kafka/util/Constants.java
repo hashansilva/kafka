@@ -16,7 +16,10 @@
 package com.hashan.silva.kafka.util;
 
 public class Constants {
-    public static final String BOOTSTRAP_SERVERS = "localhost:19092";
+    public static final String BOOTSTRAP_SERVERS = "127.0.0.1:9092";
     public static final String KAFKA_TOPIC = "wikimedia.recentchange";
     public static final String WIKIMEDIA_URL = "https://stream.wikimedia.org/v2/stream/recentchange";
+    public static final String LINGER_MS_CONFIG = "20";
+    public static final String BATCH_SIZE_CONFIG = Integer.toString(32*1024);
+    public static final String COMPRESSION_TYPE_CONFIG = "snappy";
 }
