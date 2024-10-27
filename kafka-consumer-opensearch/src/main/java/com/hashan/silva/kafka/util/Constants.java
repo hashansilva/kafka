@@ -22,4 +22,9 @@ public class Constants {
     public static final String PATH_SSL_TRUSTSTORE = "D:\\kafka\\certs\\kafka-consumer.keystore";
     public static final String JAVAX_SSL_TRUSTSTORE_PASS = "javax.net.ssl.trustStorePassword";
     public static final String SSL_TRUSTSTORE_PASS = "kafka-consumer";
+    public static final String BOOTSTRAP_SERVERS = "127.0.0.1:9092";
+    public static final String GROUP_ID_CONFIG = "consumer-opensearch";
+    public static final String AUTO_OFFSET_RESET_CONFIG = "latest";
+    public static final String KAFKA_TOPIC = "wikimedia.recentchange";
+    public static final String ENABLE_AUTO_COMMIT_CONFIG = "false";
 }
